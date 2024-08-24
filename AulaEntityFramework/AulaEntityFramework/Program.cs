@@ -1,4 +1,15 @@
+using AulaEntityFramework.Models;
+using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connString = builder.Configuration["AulaEntityFramework:ConnectionString"];
+
+// Fazemsp a cpmfogiração do DbContext com o banco de dados específico, neste caso com o SQLServer
+builder.Services.AddDbContext<MyDbContext>(
+    o => o.UseSqlServer(connString)
+    );
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
