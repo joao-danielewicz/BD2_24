@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AulaEntityFramework.Models
+namespace ProjetoLojaEletronicos.Models
 {
     // A classe de contexto de banco de dados ou DbContext é responsável por
     // mapear as classes que serão atreladas às tabelas do banco de dados.
@@ -11,8 +11,8 @@ namespace AulaEntityFramework.Models
         }
 
         // Nesta sessão, especificamos as classes do Model que serão espalhadas em tabelas do BD
-        public DbSet<Pessoa> Pessoas { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
 
     }
 }
