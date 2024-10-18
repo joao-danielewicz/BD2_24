@@ -3,9 +3,12 @@
 namespace AulaEntityFramework.Models
 {
     public enum UF
-    {
-        RS, SC, PR, SP, RJ, ES, MS, MT, MC, RO, AC, RR, AM, PA, AP, TO, GO, MA, PI, CE, RN, PB, PE, AL, SE, BA, DF
+    { 
+        RS, SC, PR, SP, RJ, ES, MS, MT, MG,
+        RO, AC, RR, AM, PA, AP, TO, GO, MA,
+        PI, CE, RN, PB, PE, AL, SE, BA, DF
     }
+
     public class Endereco
     {
         public int Id { get; set; }
@@ -13,14 +16,12 @@ namespace AulaEntityFramework.Models
         public string? Numero { get; set; }
         public string? Bairro { get; set; }
         public string? Cidade { get; set; }
-
         public UF UF { get; set; }
         public string? Pais { get; set; } = "Brasil";
         public string? CEP { get; set; }
 
         public long PessoaId { get; set; }
-        [ForeignKey ("PessoaId")]
+        [ForeignKey("PessoaId")]
         public Pessoa? Pessoa { get; set; }
     }
-
 }

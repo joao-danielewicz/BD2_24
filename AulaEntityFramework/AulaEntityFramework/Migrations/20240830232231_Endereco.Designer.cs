@@ -4,6 +4,7 @@ using AulaEntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AulaEntityFramework.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240830232231_Endereco")]
+    partial class Endereco
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,91 +83,15 @@ namespace AulaEntityFramework.Migrations
                     b.ToTable("Pessoas");
                 });
 
-            modelBuilder.Entity("AulaEntityFramework.Models.Time", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Times");
-                });
-
-            modelBuilder.Entity("AulaEntityFramework.Models.TimePessoa", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("DataEntrada")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataSaida")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("PessoaId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TimeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PessoaId");
-
-                    b.HasIndex("TimeId");
-
-                    b.ToTable("TimePessoas");
-                });
-
             modelBuilder.Entity("AulaEntityFramework.Models.Endereco", b =>
                 {
                     b.HasOne("AulaEntityFramework.Models.Pessoa", "Pessoa")
-                        .WithMany("Enderecos")
+                        .WithMany()
                         .HasForeignKey("PessoaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Pessoa");
-                });
-
-            modelBuilder.Entity("AulaEntityFramework.Models.TimePessoa", b =>
-                {
-                    b.HasOne("AulaEntityFramework.Models.Pessoa", "Pessoa")
-                        .WithMany("TimePessoas")
-                        .HasForeignKey("PessoaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AulaEntityFramework.Models.Time", "Time")
-                        .WithMany("TimesPessoas")
-                        .HasForeignKey("TimeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pessoa");
-
-                    b.Navigation("Time");
-                });
-
-            modelBuilder.Entity("AulaEntityFramework.Models.Pessoa", b =>
-                {
-                    b.Navigation("Enderecos");
-
-                    b.Navigation("TimePessoas");
-                });
-
-            modelBuilder.Entity("AulaEntityFramework.Models.Time", b =>
-                {
-                    b.Navigation("TimesPessoas");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AulaEntityFramework.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240824002142_initial")]
-    partial class initial
+    [Migration("20240824002208_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

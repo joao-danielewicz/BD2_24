@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-
-namespace AulaEntityFramework.Models
+﻿namespace AulaEntityFramework.Models
 {
     public class Pessoa
     {
         public long Id { get; set; }
         public string? Name { get; set; }
         public DateTime BirthDate { get; set; }
+
+        public List<Endereco>? Enderecos { get; set; }
+
+        public List<TimePessoa>? TimePessoas { get; set; }
     }
 }

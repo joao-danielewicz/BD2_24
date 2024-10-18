@@ -1,0 +1,18 @@
+CREATE TABLE USUARIO (
+	ID_USUARIO INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    NOME TEXT NOT NULL
+);
+
+START TRANSACTION;
+INSERT INTO USUARIO (NOME) VALUES ('João');
+COMMIT;
+
+ROLLBACK;
+-- Não é possível pois o Commit já foi executado.
+
+START TRANSACTION;
+INSERT INTO USUARIO (NOME) VALUES ('Carlos');
+ROLLBACK;
+-- Carlos não será inserido pois o Rollback foi executado, em vez do Commit.
+
+SELECT * FROM USUARIO;

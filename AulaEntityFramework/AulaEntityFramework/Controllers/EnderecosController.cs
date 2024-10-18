@@ -21,7 +21,11 @@ namespace AulaEntityFramework.Controllers
         // GET: Enderecos
         public async Task<IActionResult> Index()
         {
-            var myDbContext = _context.Enderecos.Include(e => e.Pessoa).OrderBy(o => o.Pessoa.Name);
+            var myDbContext = 
+                _context
+                .Enderecos.Include(e => e.Pessoa)
+                .OrderBy(o => o.Pessoa.Name);
+
             return View(await myDbContext.ToListAsync());
         }
 

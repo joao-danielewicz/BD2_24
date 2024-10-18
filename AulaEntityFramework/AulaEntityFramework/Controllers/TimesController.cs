@@ -7,92 +7,89 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AulaEntityFramework.Models;
 
-namespace AulaEntityFramework.Views
+namespace AulaEntityFramework.Controllers
 {
-    public class EnderecosController : Controller
+    public class TimesController : Controller
     {
         private readonly MyDbContext _context;
 
-        public EnderecosController(MyDbContext context)
+        public TimesController(MyDbContext context)
         {
             _context = context;
         }
 
-        // GET: Enderecos
+        // GET: Times
         public async Task<IActionResult> Index()
         {
-            var myDbContext = _context.Enderecos.Include(e => e.Pessoa);
-            return View(await myDbContext.ToListAsync());
+            return View(await _context.Times.ToListAsync());
         }
 
-        // GET: Enderecos/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Times/Details/5
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var endereco = await _context.Enderecos
-                .Include(e => e.Pessoa)
+            var time = await _context.Times
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (endereco == null)
+            if (time == null)
             {
                 return NotFound();
             }
 
-            return View(endereco);
+            return View(time);
         }
 
-        // GET: Enderecos/Create
+        // GET: Times/Create
         public IActionResult Create()
         {
-            ViewData["PessoaId"] = new SelectList(_context.Pessoas, "Id", "Id");
             return View();
         }
 
-        // POST: Enderecos/Create
+        // POST: Times/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Rua,Numero,Bairro,Cidade,UF,Pais,CEP,PessoaId")] Endereco endereco)
+        public async Task<IActionResult> Create(Time time)
         {
+            time.TimesPessoas = null!;
+
             if (ModelState.IsValid)
             {
-                _context.Add(endereco);
+                _context.Add(time);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PessoaId"] = new SelectList(_context.Pessoas, "Id", "Id", endereco.PessoaId);
-            return View(endereco);
+            return View(time);
         }
 
-        // GET: Enderecos/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Times/Edit/5
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var endereco = await _context.Enderecos.FindAsync(id);
-            if (endereco == null)
+            var time = await _context.Times.FindAsync(id);
+            if (time == null)
             {
                 return NotFound();
             }
-            ViewData["PessoaId"] = new SelectList(_context.Pessoas, "Id", "Id", endereco.PessoaId);
-            return View(endereco);
+            return View(time);
         }
 
-        // POST: Enderecos/Edit/5
+        // POST: Times/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Rua,Numero,Bairro,Cidade,UF,Pais,CEP,PessoaId")] Endereco endereco)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name")] Time time)
         {
-            if (id != endereco.Id)
+            if (id != time.Id)
             {
                 return NotFound();
             }
@@ -101,12 +98,12 @@ namespace AulaEntityFramework.Views
             {
                 try
                 {
-                    _context.Update(endereco);
+                    _context.Update(time);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnderecoExists(endereco.Id))
+                    if (!TimeExists(time.Id))
                     {
                         return NotFound();
                     }
@@ -117,47 +114,45 @@ namespace AulaEntityFramework.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PessoaId"] = new SelectList(_context.Pessoas, "Id", "Id", endereco.PessoaId);
-            return View(endereco);
+            return View(time);
         }
 
-        // GET: Enderecos/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Times/Delete/5
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var endereco = await _context.Enderecos
-                .Include(e => e.Pessoa)
+            var time = await _context.Times
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (endereco == null)
+            if (time == null)
             {
                 return NotFound();
             }
 
-            return View(endereco);
+            return View(time);
         }
 
-        // POST: Enderecos/Delete/5
+        // POST: Times/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var endereco = await _context.Enderecos.FindAsync(id);
-            if (endereco != null)
+            var time = await _context.Times.FindAsync(id);
+            if (time != null)
             {
-                _context.Enderecos.Remove(endereco);
+                _context.Times.Remove(time);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnderecoExists(int id)
+        private bool TimeExists(long id)
         {
-            return _context.Enderecos.Any(e => e.Id == id);
+            return _context.Times.Any(e => e.Id == id);
         }
     }
 }
