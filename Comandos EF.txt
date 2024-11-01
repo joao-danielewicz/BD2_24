@@ -2,4 +2,4 @@ String de conexão:
 "ConnString":  "Server=(localdb)\\MSSQLLocalDB;Database=MEU_BLOG;User ID=;Password=;MultipleActiveResultSets=true;ConnectionTimeout=120;"
 
 Comando de scaffold Database First:
-dotnet ef dbcontext scaffold "Server=(localdb)\MSSQLLocalDB;Database=MEU_BLOG;User ID=;Password=;" Microsoft.EntityFrameworkCore.SqlServer --output-dir Models --verbose
+dotnet ef dbcontext scaffold "Server=(localdb)\MSSQLLocalDB;Database=AEROPORTO;User ID=;Password=;" Microsoft.EntityFrameworkCore.SqlServer --output-dir Models --verbose
