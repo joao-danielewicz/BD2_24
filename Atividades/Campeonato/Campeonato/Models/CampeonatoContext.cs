@@ -46,17 +46,10 @@ public partial class CampeonatoContext : DbContext
             entity.ToTable("atleta");
 
             entity.Property(e => e.IdAtleta).HasColumnName("id_atleta");
-            entity.Property(e => e.DataNascimento)
-                .HasColumnType("text")
-                .HasColumnName("data_nascimento");
-            entity.Property(e => e.Genero)
-                .HasColumnType("text")
-                .HasColumnName("genero");
             entity.Property(e => e.IdEquipe).HasColumnName("id_equipe");
             entity.Property(e => e.Nome)
                 .HasColumnType("text")
                 .HasColumnName("nome");
-            entity.Property(e => e.Peso).HasColumnName("peso");
 
             entity.HasOne(d => d.IdEquipeNavigation).WithMany(p => p.Atleta)
                 .HasForeignKey(d => d.IdEquipe)

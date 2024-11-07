@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Campeonato.Models.Partida>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DataPartida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlacarEquipe1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlacarEquipe2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEquipe1Navigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEquipe2Navigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataPartida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlacarEquipe1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlacarEquipe2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEquipe1Navigation.IdEquipe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEquipe2Navigation.IdEquipe)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdPartida">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdPartida">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPartida">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

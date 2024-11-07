@@ -9,24 +9,23 @@ using Campeonato.Models;
 
 namespace Campeonato.Controllers
 {
-    public class TorneiosController : Controller
+    public class AtletasController : Controller
     {
         private readonly CampeonatoContext _context;
 
-        public TorneiosController(CampeonatoContext context)
+        public AtletasController(CampeonatoContext context)
         {
             _context = context;
         }
 
-        // GET: Torneios
+        // GET: Atletas
         public async Task<IActionResult> Index()
         {
-
-            var campeonatoContext = _context.Torneios.Include(t => t.IdModalidadeNavigation).Include(t => t.IdTipoTorneioNavigation);
+            var campeonatoContext = _context.Atleta.Include(a => a.IdEquipeNavigation);
             return View(await campeonatoContext.ToListAsync());
         }
 
-        // GET: Torneios/Details/5
+        // GET: Atletas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,39 +33,39 @@ namespace Campeonato.Controllers
                 return NotFound();
             }
 
-            var torneio = await _context.Torneios
-                .Include(t => t.IdModalidadeNavigation)
-                .Include(t => t.IdTipoTorneioNavigation)
-                .FirstOrDefaultAsync(m => m.IdTorneio == id);
-            if (torneio == null)
+            var atleta = await _context.Atleta
+                .Include(a => a.IdEquipeNavigation)
+                .FirstOrDefaultAsync(m => m.IdAtleta == id);
+            if (atleta == null)
             {
                 return NotFound();
             }
 
-            return View(torneio);
+            return View(atleta);
         }
 
-        // GET: Torneios/Create
+        // GET: Atletas/Create
         public IActionResult Create()
         {
-            ViewData["IdModalidade"] = new SelectList(_context.TipoModalidades, "IdModalidade", "NomeModalidade");
-            ViewData["IdTipoTorneio"] = new SelectList(_context.TipoTorneios, "IdTipoTorneio", "NomeTipo");
+            ViewData["IdEquipe"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe");
             return View();
         }
 
-        // POST: Torneios/Create
+        // POST: Atletas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTorneio,NomeTorneio,DataInicio,DataFim,IdModalidade,IdTipoTorneio")] Torneio torneio)
+        public async Task<IActionResult> Create([Bind("IdAtleta,Nome,IdEquipe")] Atleta atleta)
         {
-            _context.Add(torneio);
+            _context.Add(atleta);
             await _context.SaveChangesAsync();
+            
+            ViewData["IdEquipe"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", atleta.IdEquipe);
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Torneios/Edit/5
+        // GET: Atletas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,36 +73,35 @@ namespace Campeonato.Controllers
                 return NotFound();
             }
 
-            var torneio = await _context.Torneios.FindAsync(id);
-            if (torneio == null)
+            var atleta = await _context.Atleta.FindAsync(id);
+            if (atleta == null)
             {
                 return NotFound();
             }
-            ViewData["IdModalidade"] = new SelectList(_context.TipoModalidades, "IdModalidade", "NomeModalidade", torneio.IdModalidade);
-            ViewData["IdTipoTorneio"] = new SelectList(_context.TipoTorneios, "IdTipoTorneio", "NomeTipo", torneio.IdTipoTorneio);
-            return View(torneio);
+            ViewData["IdEquipe"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", atleta.IdEquipe);
+            return View(atleta);
         }
 
-        // POST: Torneios/Edit/5
+        // POST: Atletas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTorneio,NomeTorneio,DataInicio,DataFim,IdModalidade,IdTipoTorneio")] Torneio torneio)
+        public async Task<IActionResult> Edit(int id, [Bind("IdAtleta,Nome,Genero,Peso,IdEquipe")] Atleta atleta)
         {
-            if (id != torneio.IdTorneio)
+            if (id != atleta.IdAtleta)
             {
                 return NotFound();
             }
 
             try
             {
-                _context.Update(torneio);
+                _context.Update(atleta);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TorneioExists(torneio.IdTorneio))
+                if (!AtletaExists(atleta.IdAtleta))
                 {
                     return NotFound();
                 }
@@ -112,10 +110,11 @@ namespace Campeonato.Controllers
                     throw;
                 }
             }
+            ViewData["IdEquipe"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", atleta.IdEquipe);
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Torneios/Delete/5
+        // GET: Atletas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,36 +122,35 @@ namespace Campeonato.Controllers
                 return NotFound();
             }
 
-            var torneio = await _context.Torneios
-                .Include(t => t.IdModalidadeNavigation)
-                .Include(t => t.IdTipoTorneioNavigation)
-                .FirstOrDefaultAsync(m => m.IdTorneio == id);
-            if (torneio == null)
+            var atleta = await _context.Atleta
+                .Include(a => a.IdEquipeNavigation)
+                .FirstOrDefaultAsync(m => m.IdAtleta == id);
+            if (atleta == null)
             {
                 return NotFound();
             }
 
-            return View(torneio);
+            return View(atleta);
         }
 
-        // POST: Torneios/Delete/5
+        // POST: Atletas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var torneio = await _context.Torneios.FindAsync(id);
-            if (torneio != null)
+            var atleta = await _context.Atleta.FindAsync(id);
+            if (atleta != null)
             {
-                _context.Torneios.Remove(torneio);
+                _context.Atleta.Remove(atleta);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TorneioExists(int id)
+        private bool AtletaExists(int id)
         {
-            return _context.Torneios.Any(e => e.IdTorneio == id);
+            return _context.Atleta.Any(e => e.IdAtleta == id);
         }
     }
 }

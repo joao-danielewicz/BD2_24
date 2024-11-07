@@ -4,28 +4,28 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Torneios</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Adicionar novo</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NomeTorneio)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataInicio)
+                Data de abertura
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataFim)
+                Data de encerramento
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdModalidadeNavigation)
+                Esporte
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdTipoTorneioNavigation)
+                Tipo de competição
             </th>
             <th></th>
         </tr>
@@ -43,15 +43,15 @@
                 @Html.DisplayFor(modelItem => item.DataFim)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdModalidadeNavigation.IdModalidade)
+                @Html.DisplayFor(modelItem => item.IdModalidadeNavigation.NomeModalidade)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdTipoTorneioNavigation.IdTipoTorneio)
+                @Html.DisplayFor(modelItem => item.IdTipoTorneioNavigation.NomeTipo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdTorneio">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdTorneio">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdTorneio">Delete</a>
+                <a class="btn btn-primary py-1 px-2 me-2" asp-action="Edit" asp-route-id="@item.IdTorneio">Editar</a>
+                <a class="btn btn-primary py-1 px-2 me-2"  asp-action="Details" asp-route-id="@item.IdTorneio">Detalhar</a>
+                <a class="btn btn-primary py-1 px-2" asp-action="Delete" asp-route-id="@item.IdTorneio">Excluir</a>
             </td>
         </tr>
 }
