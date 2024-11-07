@@ -1,8 +1,8 @@
 IF NOT EXISTS ( SELECT * FROM sysobjects WHERE name = 'campeonato')
-BEGIN
+BEGIN 
 	create database campeonato;
-
 END
+
 GO
 	use campeonato;
 
@@ -37,8 +37,8 @@ create table [dbo].[torneio](
 	[data_fim] DATETIME NOT NULL,
 	[id_modalidade] INT NOT NULL,
     [id_tipo_torneio] INT NOT NULL,
-    CONSTRAINT [fk_id_modalidade] FOREIGN KEY([id_modalidade]) REFERENCES [dbo].[tipo_modalidade] ([id_modalidade]),
-    CONSTRAINT [fk_id_tipo_torneio] FOREIGN KEY([id_tipo_torneio]) REFERENCES [dbo].[tipo_torneio] ([id_tipo_torneio]),
+    CONSTRAINT [fk_id_modalidade] FOREIGN KEY([id_modalidade]) REFERENCES [dbo].[tipo_modalidade] ([id_modalidade]) ON DELETE CASCADE,
+    CONSTRAINT [fk_id_tipo_torneio] FOREIGN KEY([id_tipo_torneio]) REFERENCES [dbo].[tipo_torneio] ([id_tipo_torneio]) ON DELETE CASCADE,
     CONSTRAINT [PK_dbo.torneio] PRIMARY KEY CLUSTERED([id_torneio] ASC)
 );
 END
@@ -61,8 +61,8 @@ create table [dbo].[grupo](
 	[nome_grupo] TEXT NOT NULL,
     [id_fase] INT NOT NULL,
 	[id_torneio] INT NOT NULL,
-    CONSTRAINT [fk_id_fase] FOREIGN KEY([id_fase]) REFERENCES [dbo].[fase] ([id_fase]),
-	CONSTRAINT [fk_id_torneio_grupo] FOREIGN KEY([id_torneio]) REFERENCES [dbo].[torneio] ([id_torneio]),
+    CONSTRAINT [fk_id_fase] FOREIGN KEY([id_fase]) REFERENCES [dbo].[fase] ([id_fase]) ON DELETE CASCADE,
+	CONSTRAINT [fk_id_torneio_grupo] FOREIGN KEY([id_torneio]) REFERENCES [dbo].[torneio] ([id_torneio]) ON DELETE CASCADE,
     CONSTRAINT [PK_dbo.grupo] PRIMARY KEY CLUSTERED([id_grupo] ASC)
 );
 END
@@ -76,7 +76,7 @@ create table [dbo].[equipe](
     [id_grupo] INT NULL,
     [id_torneio] INT NOT NULL,
     CONSTRAINT [fk_id_grupo] FOREIGN KEY([id_grupo]) references [dbo].[grupo] ([id_grupo]),
-    CONSTRAINT [fk_id_torneio_equipe] FOREIGN KEY([id_torneio]) REFERENCES [dbo].[torneio] ([id_torneio]),
+    CONSTRAINT [fk_id_torneio_equipe] FOREIGN KEY([id_torneio]) REFERENCES [dbo].[torneio] ([id_torneio]) ON DELETE CASCADE,
     CONSTRAINT [PK_dbo.equipe] PRIMARY KEY CLUSTERED([id_equipe] ASC)
 );
 END
@@ -91,7 +91,7 @@ create table [dbo].[atleta](
     [data_nascimento] TEXT NOT NULL,
     [peso] INT NOT NULL,
     [id_equipe] INT NOT NULL,
-    CONSTRAINT [fk_id_equipe_atleta] FOREIGN KEY([id_equipe]) REFERENCES [dbo].[equipe] ([id_equipe]),
+    CONSTRAINT [fk_id_equipe_atleta] FOREIGN KEY([id_equipe]) REFERENCES [dbo].[equipe] ([id_equipe]) ON DELETE CASCADE,
     CONSTRAINT [PK_dbo.atleta] PRIMARY KEY CLUSTERED([id_atleta] ASC)
 );
 END
@@ -119,7 +119,7 @@ create table [dbo].[resultado](
 	[id_resultado] INT IDENTITY (1,1) NOT NULL,
     [quantidade_pontos] INT NOT NULL,
     [id_equipe] INT NOT NULL,
-    CONSTRAINT [fk_id_equipe_resultado] FOREIGN KEY([id_equipe]) REFERENCES [dbo].[equipe] ([id_equipe]),
+    CONSTRAINT [fk_id_equipe_resultado] FOREIGN KEY([id_equipe]) REFERENCES [dbo].[equipe] ([id_equipe]) ON DELETE CASCADE,
     CONSTRAINT [PK_dbo.resultado] PRIMARY KEY CLUSTERED([id_resultado] ASC)
 );
 END
