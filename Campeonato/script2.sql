@@ -88,7 +88,6 @@ create table [dbo].[atleta](
 	[id_atleta] INT IDENTITY (1,1) NOT NULL,
     [nome] TEXT NOT NULL,
     [genero] TEXT NOT NULL,
-    [data_nascimento] TEXT NOT NULL,
     [peso] INT NOT NULL,
     [id_equipe] INT NOT NULL,
     CONSTRAINT [fk_id_equipe_atleta] FOREIGN KEY([id_equipe]) REFERENCES [dbo].[equipe] ([id_equipe]) ON DELETE CASCADE,
