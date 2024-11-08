@@ -32,9 +32,9 @@
                 @Html.DisplayFor(modelItem => item.IdEquipeNavigation.NomeEquipe)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdAtleta">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdAtleta">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdAtleta">Delete</a>
+                <a class="btn btn-primary py-1 me-2" asp-action="Edit" asp-route-id="@item.IdAtleta">Editar</a> 
+                    <a class="btn btn-primary py-1 me-2" asp-action="Details" asp-route-id="@item.IdAtleta">Detalhes</a>
+                    <a class="btn btn-primary py-1 me-2" asp-action="Delete" asp-route-id="@item.IdAtleta">Excluir</a>
             </td>
         </tr>
 }

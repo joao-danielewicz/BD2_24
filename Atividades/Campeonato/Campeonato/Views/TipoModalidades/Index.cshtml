@@ -4,16 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="d-flex justify-content-center flex-column mb-5">
+    <h2 class="text-center mb-3">Modalidades</h2>
+    <hr />
+    <a class="btn btn-light mx-auto" asp-action="Create">Adicionar nova</a>
+</div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NomeModalidade)
+                Nome
             </th>
             <th></th>
         </tr>
@@ -25,9 +25,9 @@
                 @Html.DisplayFor(modelItem => item.NomeModalidade)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdModalidade">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdModalidade">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdModalidade">Delete</a>
+                <a class="btn btn-primary py-1 me-2" asp-action="Edit" asp-route-id="@item.IdModalidade">Editar</a> 
+                    <a class="btn btn-primary py-1 me-2" asp-action="Details" asp-route-id="@item.IdModalidade">Detalhes</a>
+                    <a class="btn btn-primary py-1 me-2" asp-action="Delete" asp-route-id="@item.IdModalidade">Excluir</a>
             </td>
         </tr>
 }

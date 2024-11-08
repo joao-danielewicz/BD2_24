@@ -44,9 +44,9 @@
                 @Html.DisplayFor(modelItem => item.IdFaseNavigation.Descricao)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPartida">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdPartida">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPartida">Delete</a>
+                <a class="btn btn-primary py-1 me-2" asp-action="Edit" asp-route-id="@item.IdPartida">Editar</a> 
+                    <a class="btn btn-primary py-1 me-2" asp-action="Details" asp-route-id="@item.IdPartida">Detalhes</a>
+                    <a class="btn btn-primary py-1 me-2" asp-action="Delete" asp-route-id="@item.IdPartida">Excluir</a>
             </td>
         </tr>
 }

@@ -4,28 +4,28 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="d-flex justify-content-center flex-column mb-5">
+    <h2 class="text-center mb-3">Torneios</h2>
+    <hr />
+    <a class="btn btn-light mx-auto" asp-action="Create">Adicionar</a>
+</div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NomeTorneio)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataInicio)
+                Data de abertura
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataFim)
+                Data de encerramento
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdModalidadeNavigation)
+                Esporte
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdTipoTorneioNavigation)
+                Tipo de competição
             </th>
             <th></th>
         </tr>
@@ -49,9 +49,9 @@
                 @Html.DisplayFor(modelItem => item.IdTipoTorneioNavigation.IdTipoTorneio)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdTorneio">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdTorneio">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdTorneio">Delete</a>
+                <a class="btn btn-primary py-1 me-2" asp-action="Edit" asp-route-id="@item.IdTorneio">Editar</a> 
+                    <a class="btn btn-primary py-1 me-2" asp-action="Details" asp-route-id="@item.IdTorneio">Detalhes</a>
+                    <a class="btn btn-primary py-1 me-2" asp-action="Delete" asp-route-id="@item.IdTorneio">Excluir</a>
             </td>
         </tr>
 }

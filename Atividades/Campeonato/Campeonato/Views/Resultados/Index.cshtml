@@ -5,38 +5,47 @@
    Dictionary<string, int> parTimePontos = new();
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="d-flex justify-content-center flex-column mb-5">
+    <h2 class="text-center mb-3">Ranking Geral</h2>
+    <hr />
+    <a class="btn btn-light mx-auto" asp-action="Create">Adicionar pontos</a>
+</div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.QuantidadePontos)
+                Quantidade de Pontos
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdEquipeNavigation)
+                Equipe
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @ViewData["SomaPontos"];
-        @Model.GroupBy(item => item.IdEquipe);
-        @Model.GroupBy(item => item.IdEquipe).SelectMany(grupo => grupo).ToList();
-        @Model.GroupBy(item => item.IdEquipe).SelectMany(grupo => grupo).ToList();
+        
         @foreach (var item in Model)
         {
-            
-            parTimePontos.Add(item.IdEquipeNavigation.NomeEquipe, +item.QuantidadePontos);
+            if (!parTimePontos.ContainsKey(item.IdEquipeNavigation.NomeEquipe))
+            {
+            parTimePontos.Add(item.IdEquipeNavigation.NomeEquipe, item.QuantidadePontos);
+
+            }
+            else
+            {
+                parTimePontos[item.IdEquipeNavigation.NomeEquipe] += item.QuantidadePontos;
+            }
         }
 
-        @foreach (var tuple in parTimePontos){
+        @foreach (var tuple in parTimePontos.OrderByDescending(key => key.Value))
+        {
             <tr>
+                
                 <td>
-                    @tuple
+                    @tuple.Value
+                </td>
+                <td>
+                    @tuple.Key
                 </td>
             </tr>
         }

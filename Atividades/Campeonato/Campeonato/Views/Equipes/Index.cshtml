@@ -35,12 +35,12 @@
                 @Html.DisplayFor(modelItem => item.IdGrupo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdTorneioNavigation.IdTorneio)
+                @Html.DisplayFor(modelItem => item.IdTorneioNavigation.NomeTorneio)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdEquipe">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdEquipe">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdEquipe">Delete</a>
+                <a class="btn btn-primary py-1 me-2" asp-action="Edit" asp-route-id="@item.IdEquipe">Editar</a> 
+                    <a class="btn btn-primary py-1 me-2" asp-action="Details" asp-route-id="@item.IdEquipe">Detalhes</a>
+                    <a class="btn btn-primary py-1 me-2" asp-action="Delete" asp-route-id="@item.IdEquipe">Excluir</a>
             </td>
         </tr>
 }
