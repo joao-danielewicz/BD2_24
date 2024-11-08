@@ -69,3 +69,6 @@ insert into resultado(qtd_pontos, id_equipe) values
 (3, 13),
 (3, 13),
 (3, 14);
+
+
+select * from fase;

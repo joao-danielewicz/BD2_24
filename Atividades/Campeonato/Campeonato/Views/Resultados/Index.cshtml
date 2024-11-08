@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+   Dictionary<string, int> parTimePontos = new();
 }
 
 <h1>Index</h1>
@@ -22,21 +23,23 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-    @ViewData["SomaPontos"]
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuantidadePontos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdEquipeNavigation.IdEquipe)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdResultado">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdResultado">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdResultado">Delete</a>
-            </td>
-        </tr>
-}
+        @ViewData["SomaPontos"];
+        @Model.GroupBy(item => item.IdEquipe);
+        @Model.GroupBy(item => item.IdEquipe).SelectMany(grupo => grupo).ToList();
+        @Model.GroupBy(item => item.IdEquipe).SelectMany(grupo => grupo).ToList();
+        @foreach (var item in Model)
+        {
+            
+            parTimePontos.Add(item.IdEquipeNavigation.NomeEquipe, +item.QuantidadePontos);
+        }
+
+        @foreach (var tuple in parTimePontos){
+            <tr>
+                <td>
+                    @tuple
+                </td>
+            </tr>
+        }
+
     </tbody>
 </table>

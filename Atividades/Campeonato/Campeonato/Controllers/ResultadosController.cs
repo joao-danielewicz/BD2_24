@@ -22,7 +22,6 @@ namespace Campeonato.Controllers
         public async Task<IActionResult> Index()
         {
             var campeonatoContext = _context.Resultados.Include(r => r.IdEquipeNavigation);
-            ViewData["SomaPontos"] = campeonatoContext.GroupBy(r => r.IdEquipe);
             return View(await campeonatoContext.ToListAsync());
         }
 
