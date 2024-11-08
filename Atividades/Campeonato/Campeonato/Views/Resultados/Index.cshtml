@@ -2,7 +2,8 @@
 
 @{
     ViewData["Title"] = "Index";
-   Dictionary<string, int> parTimePontos = new();
+    Dictionary<string, int> parTimePontos = new();
+    int contador = 1;
 }
 
 <div class="d-flex justify-content-center flex-column mb-5">
@@ -14,12 +15,14 @@
     <thead>
         <tr>
             <th>
-                Quantidade de Pontos
+                Classificação
             </th>
             <th>
                 Equipe
             </th>
-            <th></th>
+            <th>
+                Quantidade de Pontos
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -40,14 +43,17 @@
         @foreach (var tuple in parTimePontos.OrderByDescending(key => key.Value))
         {
             <tr>
-                
                 <td>
-                    @tuple.Value
+                    @contador
                 </td>
                 <td>
                     @tuple.Key
                 </td>
+                <td>
+                    @tuple.Value
+                </td>
             </tr>
+            contador++;
         }
 
     </tbody>

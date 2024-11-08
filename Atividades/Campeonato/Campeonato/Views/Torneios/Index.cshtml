@@ -43,10 +43,10 @@
                 @Html.DisplayFor(modelItem => item.DataFim)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdModalidadeNavigation.IdModalidade)
+                @Html.DisplayFor(modelItem => item.IdModalidadeNavigation.NomeModalidade)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdTipoTorneioNavigation.IdTipoTorneio)
+                @Html.DisplayFor(modelItem => item.IdTipoTorneioNavigation.NomeTipo)
             </td>
             <td>
                 <a class="btn btn-primary py-1 me-2" asp-action="Edit" asp-route-id="@item.IdTorneio">Editar</a> 
