@@ -11,31 +11,31 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            Nome
+            @Html.DisplayNameFor(model => model.NomeTorneio)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NomeTorneio)
         </dd>
         <dt class = "col-sm-2">
-            Data de abertura
+            @Html.DisplayNameFor(model => model.DataInicio)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DataInicio)
         </dd>
         <dt class = "col-sm-2">
-            Data de encerramento
+            @Html.DisplayNameFor(model => model.DataFim)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DataFim)
         </dd>
         <dt class = "col-sm-2">
-            Esporte
+            @Html.DisplayNameFor(model => model.IdModalidadeNavigation)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdModalidadeNavigation.IdModalidade)
         </dd>
         <dt class = "col-sm-2">
-            Tipo de competição
+            @Html.DisplayNameFor(model => model.IdTipoTorneioNavigation)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdTipoTorneioNavigation.IdTipoTorneio)

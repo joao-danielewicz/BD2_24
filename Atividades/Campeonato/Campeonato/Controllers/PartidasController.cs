@@ -21,7 +21,7 @@ namespace Campeonato.Controllers
         // GET: Partidas
         public async Task<IActionResult> Index()
         {
-            var campeonatoContext = _context.Partida.Include(p => p.IdEquipe1Navigation).Include(p => p.IdEquipe2Navigation);
+            var campeonatoContext = _context.Partida.Include(p => p.IdEquipe1Navigation).Include(p => p.IdEquipe2Navigation).Include(p => p.IdFaseNavigation);
             return View(await campeonatoContext.ToListAsync());
         }
 
@@ -36,6 +36,7 @@ namespace Campeonato.Controllers
             var partida = await _context.Partida
                 .Include(p => p.IdEquipe1Navigation)
                 .Include(p => p.IdEquipe2Navigation)
+                .Include(p => p.IdFaseNavigation)
                 .FirstOrDefaultAsync(m => m.IdPartida == id);
             if (partida == null)
             {
@@ -50,6 +51,7 @@ namespace Campeonato.Controllers
         {
             ViewData["IdEquipe1"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe");
             ViewData["IdEquipe2"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe");
+            ViewData["IdFase"] = new SelectList(_context.Fases, "IdFase", "Descricao");
             return View();
         }
 
@@ -58,15 +60,17 @@ namespace Campeonato.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPartida,DataPartida,PlacarEquipe1,PlacarEquipe2,IdEquipe1,IdEquipe2")] Partida partida)
+        public async Task<IActionResult> Create([Bind("IdPartida,DataPartida,PlacarEquipe1,PlacarEquipe2,IdEquipe1,IdEquipe2,IdFase")] Partida partida)
         {
-            _context.Add(partida);
-            await _context.SaveChangesAsync();
-
-            ViewData["IdEquipe1"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", partida.IdEquipe1);
-            ViewData["IdEquipe2"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", partida.IdEquipe2);
-
-            return RedirectToAction(nameof(Index));
+        
+                _context.Add(partida);
+                await _context.SaveChangesAsync();
+       
+            ViewData["IdEquipe1"] = new SelectList(_context.Equipes, "IdEquipe", "IdEquipe", partida.IdEquipe1);
+            ViewData["IdEquipe2"] = new SelectList(_context.Equipes, "IdEquipe", "IdEquipe", partida.IdEquipe2);
+            ViewData["IdFase"] = new SelectList(_context.Fases, "IdFase", "IdFase", partida.IdFase);
+                return RedirectToAction(nameof(Index));
+       
         }
 
         // GET: Partidas/Edit/5
@@ -84,6 +88,7 @@ namespace Campeonato.Controllers
             }
             ViewData["IdEquipe1"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", partida.IdEquipe1);
             ViewData["IdEquipe2"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", partida.IdEquipe2);
+            ViewData["IdFase"] = new SelectList(_context.Fases, "IdFase", "Descricao", partida.IdFase);
             return View(partida);
         }
 
@@ -92,34 +97,36 @@ namespace Campeonato.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPartida,DataPartida,PlacarEquipe1,PlacarEquipe2,IdEquipe1,IdEquipe2")] Partida partida)
+        public async Task<IActionResult> Edit(int id, [Bind("IdPartida,DataPartida,PlacarEquipe1,PlacarEquipe2,IdEquipe1,IdEquipe2,IdFase")] Partida partida)
         {
             if (id != partida.IdPartida)
             {
                 return NotFound();
             }
 
-
-            try
-            {
-                _context.Update(partida);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PartidaExists(partida.IdPartida))
+            
+                try
                 {
-                    return NotFound();
+                    _context.Update(partida);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!PartidaExists(partida.IdPartida))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
-
+            
             ViewData["IdEquipe1"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", partida.IdEquipe1);
             ViewData["IdEquipe2"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", partida.IdEquipe2);
-            return RedirectToAction(nameof(Index));
+            ViewData["IdFase"] = new SelectList(_context.Fases, "IdFase", "Descricao", partida.IdFase);
+            
+                return RedirectToAction(nameof(Index));
         }
 
         // GET: Partidas/Delete/5
@@ -133,6 +140,7 @@ namespace Campeonato.Controllers
             var partida = await _context.Partida
                 .Include(p => p.IdEquipe1Navigation)
                 .Include(p => p.IdEquipe2Navigation)
+                .Include(p => p.IdFaseNavigation)
                 .FirstOrDefaultAsync(m => m.IdPartida == id);
             if (partida == null)
             {

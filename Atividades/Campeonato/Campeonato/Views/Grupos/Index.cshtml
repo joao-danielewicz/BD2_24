@@ -13,13 +13,10 @@
     <thead>
         <tr>
             <th>
-                Nome
+                @Html.DisplayNameFor(model => model.NomeGrupo)
             </th>
             <th>
-                Fase
-            </th>
-            <th>
-                Torneio
+                @Html.DisplayNameFor(model => model.IdTorneioNavigation)
             </th>
             <th></th>
         </tr>
@@ -31,10 +28,7 @@
                 @Html.DisplayFor(modelItem => item.NomeGrupo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdFaseNavigation.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTorneioNavigation.NomeTorneio)
+                @Html.DisplayFor(modelItem => item.IdTorneioNavigation.IdTorneio)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdGrupo">Edit</a> |

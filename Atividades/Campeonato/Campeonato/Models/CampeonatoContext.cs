@@ -53,7 +53,6 @@ public partial class CampeonatoContext : DbContext
 
             entity.HasOne(d => d.IdEquipeNavigation).WithMany(p => p.Atleta)
                 .HasForeignKey(d => d.IdEquipe)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_id_equipe_atleta");
         });
 
@@ -70,13 +69,8 @@ public partial class CampeonatoContext : DbContext
                 .HasColumnType("text")
                 .HasColumnName("nome_equipe");
 
-            entity.HasOne(d => d.IdGrupoNavigation).WithMany(p => p.Equipes)
-                .HasForeignKey(d => d.IdGrupo)
-                .HasConstraintName("fk_id_grupo");
-
             entity.HasOne(d => d.IdTorneioNavigation).WithMany(p => p.Equipes)
                 .HasForeignKey(d => d.IdTorneio)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_id_torneio_equipe");
         });
 
@@ -99,20 +93,13 @@ public partial class CampeonatoContext : DbContext
             entity.ToTable("grupo");
 
             entity.Property(e => e.IdGrupo).HasColumnName("id_grupo");
-            entity.Property(e => e.IdFase).HasColumnName("id_fase");
             entity.Property(e => e.IdTorneio).HasColumnName("id_torneio");
             entity.Property(e => e.NomeGrupo)
                 .HasColumnType("text")
                 .HasColumnName("nome_grupo");
 
-            entity.HasOne(d => d.IdFaseNavigation).WithMany(p => p.Grupos)
-                .HasForeignKey(d => d.IdFase)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_id_fase");
-
             entity.HasOne(d => d.IdTorneioNavigation).WithMany(p => p.Grupos)
                 .HasForeignKey(d => d.IdTorneio)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_id_torneio_grupo");
         });
 
@@ -128,6 +115,7 @@ public partial class CampeonatoContext : DbContext
                 .HasColumnName("data_partida");
             entity.Property(e => e.IdEquipe1).HasColumnName("id_equipe_1");
             entity.Property(e => e.IdEquipe2).HasColumnName("id_equipe_2");
+            entity.Property(e => e.IdFase).HasColumnName("id_fase");
             entity.Property(e => e.PlacarEquipe1).HasColumnName("placar_equipe_1");
             entity.Property(e => e.PlacarEquipe2).HasColumnName("placar_equipe_2");
 
@@ -140,6 +128,10 @@ public partial class CampeonatoContext : DbContext
                 .HasForeignKey(d => d.IdEquipe2)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_id_equipe2_partida");
+
+            entity.HasOne(d => d.IdFaseNavigation).WithMany(p => p.Partida)
+                .HasForeignKey(d => d.IdFase)
+                .HasConstraintName("fk_id_fase");
         });
 
         modelBuilder.Entity<Resultado>(entity =>
@@ -154,7 +146,6 @@ public partial class CampeonatoContext : DbContext
 
             entity.HasOne(d => d.IdEquipeNavigation).WithMany(p => p.Resultados)
                 .HasForeignKey(d => d.IdEquipe)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_id_equipe_resultado");
         });
 
@@ -203,12 +194,10 @@ public partial class CampeonatoContext : DbContext
 
             entity.HasOne(d => d.IdModalidadeNavigation).WithMany(p => p.Torneios)
                 .HasForeignKey(d => d.IdModalidade)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_id_modalidade");
 
             entity.HasOne(d => d.IdTipoTorneioNavigation).WithMany(p => p.Torneios)
                 .HasForeignKey(d => d.IdTipoTorneio)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_id_tipo_torneio");
         });
 

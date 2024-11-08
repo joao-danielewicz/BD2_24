@@ -55,12 +55,11 @@ namespace Campeonato.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdFase,Descricao")] Fase fase)
         {
-            if (ModelState.IsValid)
-            {
+            
                 _context.Add(fase);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            
             return View(fase);
         }
 
@@ -92,8 +91,7 @@ namespace Campeonato.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+            
                 try
                 {
                     _context.Update(fase);
@@ -111,7 +109,7 @@ namespace Campeonato.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
+            
             return View(fase);
         }
 

@@ -58,13 +58,12 @@ namespace Campeonato.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdResultado,QuantidadePontos,IdEquipe")] Resultado resultado)
         {
-
-            _context.Add(resultado);
-            await _context.SaveChangesAsync();
-
+            
+                _context.Add(resultado);
+                await _context.SaveChangesAsync();
+            
             ViewData["IdEquipe"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", resultado.IdEquipe);
-
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
         }
 
         // GET: Resultados/Edit/5
@@ -96,26 +95,27 @@ namespace Campeonato.Controllers
                 return NotFound();
             }
 
-
-            try
-            {
-                _context.Update(resultado);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ResultadoExists(resultado.IdResultado))
+            
+                try
                 {
-                    return NotFound();
+                    _context.Update(resultado);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!ResultadoExists(resultado.IdResultado))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
-
+            
             ViewData["IdEquipe"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", resultado.IdEquipe);
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            
         }
 
         // GET: Resultados/Delete/5

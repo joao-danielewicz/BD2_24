@@ -21,7 +21,7 @@ namespace Campeonato.Controllers
         // GET: Grupos
         public async Task<IActionResult> Index()
         {
-            var campeonatoContext = _context.Grupos.Include(g => g.IdFaseNavigation).Include(g => g.IdTorneioNavigation);
+            var campeonatoContext = _context.Grupos.Include(g => g.IdTorneioNavigation);
             return View(await campeonatoContext.ToListAsync());
         }
 
@@ -34,7 +34,6 @@ namespace Campeonato.Controllers
             }
 
             var grupo = await _context.Grupos
-                .Include(g => g.IdFaseNavigation)
                 .Include(g => g.IdTorneioNavigation)
                 .FirstOrDefaultAsync(m => m.IdGrupo == id);
             if (grupo == null)
@@ -48,7 +47,6 @@ namespace Campeonato.Controllers
         // GET: Grupos/Create
         public IActionResult Create()
         {
-            ViewData["IdFase"] = new SelectList(_context.Fases, "IdFase", "Descricao");
             ViewData["IdTorneio"] = new SelectList(_context.Torneios, "IdTorneio", "NomeTorneio");
             return View();
         }
@@ -58,13 +56,15 @@ namespace Campeonato.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdGrupo,NomeGrupo,IdFase,IdTorneio")] Grupo grupo)
+        public async Task<IActionResult> Create([Bind("IdGrupo,NomeGrupo,IdTorneio")] Grupo grupo)
         {
-            _context.Add(grupo);
-            await _context.SaveChangesAsync();
-            ViewData["IdFase"] = new SelectList(_context.Fases, "IdFase", "Descricao", grupo.IdFase);
+            
+                _context.Add(grupo);
+                await _context.SaveChangesAsync();
+            
             ViewData["IdTorneio"] = new SelectList(_context.Torneios, "IdTorneio", "NomeTorneio", grupo.IdTorneio);
-           return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            
         }
 
         // GET: Grupos/Edit/5
@@ -80,7 +80,6 @@ namespace Campeonato.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdFase"] = new SelectList(_context.Fases, "IdFase", "Descricao", grupo.IdFase);
             ViewData["IdTorneio"] = new SelectList(_context.Torneios, "IdTorneio", "NomeTorneio", grupo.IdTorneio);
             return View(grupo);
         }
@@ -90,31 +89,33 @@ namespace Campeonato.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdGrupo,NomeGrupo,IdFase,IdTorneio")] Grupo grupo)
+        public async Task<IActionResult> Edit(int id, [Bind("IdGrupo,NomeGrupo,IdTorneio")] Grupo grupo)
         {
             if (id != grupo.IdGrupo)
             {
                 return NotFound();
             }
-            try
-            {
-                _context.Update(grupo);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GrupoExists(grupo.IdGrupo))
+
+                try
                 {
-                    return NotFound();
+                    _context.Update(grupo);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!GrupoExists(grupo.IdGrupo))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
-            ViewData["IdFase"] = new SelectList(_context.Fases, "IdFase", "Descricao", grupo.IdFase);
+            
             ViewData["IdTorneio"] = new SelectList(_context.Torneios, "IdTorneio", "NomeTorneio", grupo.IdTorneio);
-            return RedirectToAction(nameof(Index));
+
+                return RedirectToAction(nameof(Index));
         }
 
         // GET: Grupos/Delete/5
@@ -126,7 +127,6 @@ namespace Campeonato.Controllers
             }
 
             var grupo = await _context.Grupos
-                .Include(g => g.IdFaseNavigation)
                 .Include(g => g.IdTorneioNavigation)
                 .FirstOrDefaultAsync(m => m.IdGrupo == id);
             if (grupo == null)

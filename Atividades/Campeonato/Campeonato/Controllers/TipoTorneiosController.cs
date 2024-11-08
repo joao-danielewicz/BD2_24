@@ -55,13 +55,12 @@ namespace Campeonato.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdTipoTorneio,NomeTipo")] TipoTorneio tipoTorneio)
         {
-            if (ModelState.IsValid)
-            {
+            
                 _context.Add(tipoTorneio);
                 await _context.SaveChangesAsync();
+            
+            
                 return RedirectToAction(nameof(Index));
-            }
-            return View(tipoTorneio);
         }
 
         // GET: TipoTorneios/Edit/5
@@ -92,8 +91,7 @@ namespace Campeonato.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+            
                 try
                 {
                     _context.Update(tipoTorneio);
@@ -110,9 +108,9 @@ namespace Campeonato.Controllers
                         throw;
                     }
                 }
+            
+            
                 return RedirectToAction(nameof(Index));
-            }
-            return View(tipoTorneio);
         }
 
         // GET: TipoTorneios/Delete/5

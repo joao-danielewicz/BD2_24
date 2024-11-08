@@ -15,8 +15,6 @@ public partial class Equipe
 
     public virtual ICollection<Atleta> Atleta { get; set; } = new List<Atleta>();
 
-    public virtual Grupo? IdGrupoNavigation { get; set; }
-
     public virtual Torneio IdTorneioNavigation { get; set; } = null!;
 
     public virtual ICollection<Partida> PartidumIdEquipe1Navigations { get; set; } = new List<Partida>();

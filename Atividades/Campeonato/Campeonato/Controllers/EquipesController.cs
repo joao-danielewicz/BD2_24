@@ -21,7 +21,7 @@ namespace Campeonato.Controllers
         // GET: Equipes
         public async Task<IActionResult> Index()
         {
-            var campeonatoContext = _context.Equipes.Include(e => e.IdGrupoNavigation).Include(e => e.IdTorneioNavigation);
+            var campeonatoContext = _context.Equipes.Include(e => e.IdTorneioNavigation);
             return View(await campeonatoContext.ToListAsync());
         }
 
@@ -34,7 +34,6 @@ namespace Campeonato.Controllers
             }
 
             var equipe = await _context.Equipes
-                .Include(e => e.IdGrupoNavigation)
                 .Include(e => e.IdTorneioNavigation)
                 .FirstOrDefaultAsync(m => m.IdEquipe == id);
             if (equipe == null)
@@ -48,7 +47,6 @@ namespace Campeonato.Controllers
         // GET: Equipes/Create
         public IActionResult Create()
         {
-            ViewData["IdGrupo"] = new SelectList(_context.Grupos, "IdGrupo", "IdGrupo");
             ViewData["IdTorneio"] = new SelectList(_context.Torneios, "IdTorneio", "NomeTorneio");
             return View();
         }
@@ -60,11 +58,13 @@ namespace Campeonato.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdEquipe,NomeEquipe,IdGrupo,IdTorneio")] Equipe equipe)
         {
-            _context.Add(equipe);
-            await _context.SaveChangesAsync();
-            ViewData["IdGrupo"] = new SelectList(_context.Grupos, "IdGrupo", "NomeGrupo", equipe.IdGrupo);
+            
+                _context.Add(equipe);
+                await _context.SaveChangesAsync();
+            
             ViewData["IdTorneio"] = new SelectList(_context.Torneios, "IdTorneio", "NomeTorneio", equipe.IdTorneio);
-            return RedirectToAction(nameof(Index));
+            
+                return RedirectToAction(nameof(Index));
         }
 
         // GET: Equipes/Edit/5
@@ -80,7 +80,6 @@ namespace Campeonato.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdGrupo"] = new SelectList(_context.Grupos, "IdGrupo", "NomeGrupo", equipe.IdGrupo);
             ViewData["IdTorneio"] = new SelectList(_context.Torneios, "IdTorneio", "NomeTorneio", equipe.IdTorneio);
             return View(equipe);
         }
@@ -97,27 +96,27 @@ namespace Campeonato.Controllers
                 return NotFound();
             }
 
-            try
-            {
-                _context.Update(equipe);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EquipeExists(equipe.IdEquipe))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
             
-            ViewData["IdGrupo"] = new SelectList(_context.Grupos, "IdGrupo", "NomeGrupo", equipe.IdGrupo);
+                try
+                {
+                    _context.Update(equipe);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EquipeExists(equipe.IdEquipe))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            
             ViewData["IdTorneio"] = new SelectList(_context.Torneios, "IdTorneio", "NomeTorneio", equipe.IdTorneio);
+                return RedirectToAction(nameof(Index));
             
-            return RedirectToAction(nameof(Index));
         }
 
         // GET: Equipes/Delete/5
@@ -129,7 +128,6 @@ namespace Campeonato.Controllers
             }
 
             var equipe = await _context.Equipes
-                .Include(e => e.IdGrupoNavigation)
                 .Include(e => e.IdTorneioNavigation)
                 .FirstOrDefaultAsync(m => m.IdEquipe == id);
             if (equipe == null)

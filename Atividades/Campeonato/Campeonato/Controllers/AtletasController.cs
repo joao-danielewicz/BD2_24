@@ -58,11 +58,13 @@ namespace Campeonato.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdAtleta,Nome,IdEquipe")] Atleta atleta)
         {
-            _context.Add(atleta);
-            await _context.SaveChangesAsync();
+            
+                _context.Add(atleta);
+                await _context.SaveChangesAsync();
             
             ViewData["IdEquipe"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", atleta.IdEquipe);
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            
         }
 
         // GET: Atletas/Edit/5
@@ -87,31 +89,33 @@ namespace Campeonato.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdAtleta,Nome,Genero,Peso,IdEquipe")] Atleta atleta)
+        public async Task<IActionResult> Edit(int id, [Bind("IdAtleta,Nome,IdEquipe")] Atleta atleta)
         {
             if (id != atleta.IdAtleta)
             {
                 return NotFound();
             }
 
-            try
-            {
-                _context.Update(atleta);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AtletaExists(atleta.IdAtleta))
+                try
                 {
-                    return NotFound();
+                    _context.Update(atleta);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!AtletaExists(atleta.IdAtleta))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
+
             ViewData["IdEquipe"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", atleta.IdEquipe);
-            return RedirectToAction(nameof(Index));
+
+                return RedirectToAction(nameof(Index));
         }
 
         // GET: Atletas/Delete/5

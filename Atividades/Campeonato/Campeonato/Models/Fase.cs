@@ -9,5 +9,5 @@ public partial class Fase
 
     public string Descricao { get; set; } = null!;
 
-    public virtual ICollection<Grupo> Grupos { get; set; } = new List<Grupo>();
+    public virtual ICollection<Partida> Partida { get; set; } = new List<Partida>();
 }

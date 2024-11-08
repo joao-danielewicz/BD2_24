@@ -21,7 +21,6 @@ namespace Campeonato.Controllers
         // GET: Torneios
         public async Task<IActionResult> Index()
         {
-
             var campeonatoContext = _context.Torneios.Include(t => t.IdModalidadeNavigation).Include(t => t.IdTipoTorneioNavigation);
             return View(await campeonatoContext.ToListAsync());
         }
@@ -50,7 +49,7 @@ namespace Campeonato.Controllers
         public IActionResult Create()
         {
             ViewData["IdModalidade"] = new SelectList(_context.TipoModalidades, "IdModalidade", "NomeModalidade");
-            ViewData["IdTipoTorneio"] = new SelectList(_context.TipoTorneios, "IdTipoTorneio", "NomeTipo");
+            ViewData["IdTipoTorneio"] = new SelectList(_context.TipoTorneios, "IdTipoTorneio", "NomeTipoTorneio");
             return View();
         }
 
@@ -61,9 +60,14 @@ namespace Campeonato.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdTorneio,NomeTorneio,DataInicio,DataFim,IdModalidade,IdTipoTorneio")] Torneio torneio)
         {
-            _context.Add(torneio);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            
+                _context.Add(torneio);
+                await _context.SaveChangesAsync();
+            
+            ViewData["IdModalidade"] = new SelectList(_context.TipoModalidades, "IdModalidade", "NomeModalidade", torneio.IdModalidade);
+            ViewData["IdTipoTorneio"] = new SelectList(_context.TipoTorneios, "IdTipoTorneio", "NomeTipoTorneio", torneio.IdTipoTorneio);
+            
+                return RedirectToAction(nameof(Index));
         }
 
         // GET: Torneios/Edit/5
@@ -80,7 +84,7 @@ namespace Campeonato.Controllers
                 return NotFound();
             }
             ViewData["IdModalidade"] = new SelectList(_context.TipoModalidades, "IdModalidade", "NomeModalidade", torneio.IdModalidade);
-            ViewData["IdTipoTorneio"] = new SelectList(_context.TipoTorneios, "IdTipoTorneio", "NomeTipo", torneio.IdTipoTorneio);
+            ViewData["IdTipoTorneio"] = new SelectList(_context.TipoTorneios, "IdTipoTorneio", "NomeTipoTorneio", torneio.IdTipoTorneio);
             return View(torneio);
         }
 
@@ -96,23 +100,28 @@ namespace Campeonato.Controllers
                 return NotFound();
             }
 
-            try
-            {
-                _context.Update(torneio);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TorneioExists(torneio.IdTorneio))
+            
+                try
                 {
-                    return NotFound();
+                    _context.Update(torneio);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!TorneioExists(torneio.IdTorneio))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
-            return RedirectToAction(nameof(Index));
+            
+            ViewData["IdModalidade"] = new SelectList(_context.TipoModalidades, "IdModalidade", "NomeModalidade", torneio.IdModalidade);
+            ViewData["IdTipoTorneio"] = new SelectList(_context.TipoTorneios, "IdTipoTorneio", "NomeTipoTorneio", torneio.IdTipoTorneio);
+                return RedirectToAction(nameof(Index));
+            
         }
 
         // GET: Torneios/Delete/5

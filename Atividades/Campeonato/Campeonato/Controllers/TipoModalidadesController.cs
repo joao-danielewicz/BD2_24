@@ -55,12 +55,11 @@ namespace Campeonato.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdModalidade,NomeModalidade")] TipoModalidade tipoModalidade)
         {
-            if (ModelState.IsValid)
-            {
+            
                 _context.Add(tipoModalidade);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            
             return View(tipoModalidade);
         }
 
@@ -92,8 +91,7 @@ namespace Campeonato.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+            
                 try
                 {
                     _context.Update(tipoModalidade);
@@ -110,9 +108,9 @@ namespace Campeonato.Controllers
                         throw;
                     }
                 }
+            
                 return RedirectToAction(nameof(Index));
-            }
-            return View(tipoModalidade);
+            
         }
 
         // GET: TipoModalidades/Delete/5

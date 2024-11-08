@@ -17,7 +17,11 @@ public partial class Partida
 
     public int IdEquipe2 { get; set; }
 
+    public int? IdFase { get; set; }
+
     public virtual Equipe IdEquipe1Navigation { get; set; } = null!;
 
     public virtual Equipe IdEquipe2Navigation { get; set; } = null!;
+
+    public virtual Fase? IdFaseNavigation { get; set; }
 }
