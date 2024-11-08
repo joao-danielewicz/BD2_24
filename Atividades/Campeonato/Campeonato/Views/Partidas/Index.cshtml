@@ -3,32 +3,24 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="d-flex justify-content-center flex-column mb-5">
+    <h2 class="text-center mb-3">Partidas</h2>
+    <hr />
+    <a class="btn btn-light mx-auto" asp-action="Create" >Adicionar nova</a>
+</div>
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DataPartida)
+                Data da partida
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PlacarEquipe1)
+                Resultado
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PlacarEquipe2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdEquipe1Navigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdEquipe2Navigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdFaseNavigation)
+                Fase da competição
             </th>
             <th></th>
         </tr>
@@ -40,19 +32,16 @@
                 @Html.DisplayFor(modelItem => item.DataPartida)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.IdEquipe1Navigation.NomeEquipe)
+                -
                 @Html.DisplayFor(modelItem => item.PlacarEquipe1)
-            </td>
-            <td>
+                x
                 @Html.DisplayFor(modelItem => item.PlacarEquipe2)
-            </td>
+                -
+                @Html.DisplayFor(modelItem => item.IdEquipe2Navigation.NomeEquipe)
+            
             <td>
-                @Html.DisplayFor(modelItem => item.IdEquipe1Navigation.IdEquipe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdEquipe2Navigation.IdEquipe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdFaseNavigation.IdFase)
+                @Html.DisplayFor(modelItem => item.IdFaseNavigation.Descricao)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdPartida">Edit</a> |

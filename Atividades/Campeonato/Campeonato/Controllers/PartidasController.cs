@@ -66,10 +66,10 @@ namespace Campeonato.Controllers
                 _context.Add(partida);
                 await _context.SaveChangesAsync();
        
-            ViewData["IdEquipe1"] = new SelectList(_context.Equipes, "IdEquipe", "IdEquipe", partida.IdEquipe1);
-            ViewData["IdEquipe2"] = new SelectList(_context.Equipes, "IdEquipe", "IdEquipe", partida.IdEquipe2);
+            ViewData["IdEquipe1"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", partida.IdEquipe1);
+            ViewData["IdEquipe2"] = new SelectList(_context.Equipes, "IdEquipe", "NomeEquipe", partida.IdEquipe2);
             ViewData["IdFase"] = new SelectList(_context.Fases, "IdFase", "IdFase", partida.IdFase);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
        
         }
 

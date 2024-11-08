@@ -60,7 +60,7 @@ namespace Campeonato.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             
-            return View(fase);
+            
         }
 
         // GET: Fases/Edit/5
@@ -110,7 +110,7 @@ namespace Campeonato.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             
-            return View(fase);
+            
         }
 
         // GET: Fases/Delete/5

@@ -23,6 +23,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+    @ViewData["SomaPontos"]
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.QuantidadePontos)

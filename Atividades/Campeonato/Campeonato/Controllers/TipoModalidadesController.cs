@@ -60,7 +60,7 @@ namespace Campeonato.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             
-            return View(tipoModalidade);
+            
         }
 
         // GET: TipoModalidades/Edit/5
