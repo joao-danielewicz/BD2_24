@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Campeonato.Models.Partida>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="d-flex justify-content-center flex-column mb-5">
+    <h2 class="text-center mb-3">Partidas</h2>
+    <hr />
+    <a class="btn btn-light mx-auto" asp-action="Create" >Adicionar nova</a>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Data da partida
+            </th>
+            <th>
+                Resultado
+            </th>
+            <th>
+                Fase da competição
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataPartida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEquipe1Navigation.NomeEquipe)
+                -
+                @Html.DisplayFor(modelItem => item.PlacarEquipe1)
+                x
+                @Html.DisplayFor(modelItem => item.PlacarEquipe2)
+                -
+                @Html.DisplayFor(modelItem => item.IdEquipe2Navigation.NomeEquipe)
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.IdFaseNavigation.Descricao)
+            </td>
+            <td>
+                <a class="btn btn-primary py-1 me-2" asp-action="Edit" asp-route-id="@item.IdPartida">Editar</a> 
+                    <a class="btn btn-primary py-1 me-2" asp-action="Details" asp-route-id="@item.IdPartida">Detalhes</a>
+                    <a class="btn btn-primary py-1 me-2" asp-action="Delete" asp-route-id="@item.IdPartida">Excluir</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

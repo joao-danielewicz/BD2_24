@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Campeonato.Models.Resultado>
+
+@{
+    ViewData["Title"] = "Index";
+    Dictionary<string, int> parTimePontos = new();
+    int contador = 1;
+}
+
+<div class="d-flex justify-content-center flex-column mb-5">
+    <h2 class="text-center mb-3">Ranking Geral</h2>
+    <hr />
+    <a class="btn btn-light mx-auto" asp-action="Create">Adicionar pontos</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Classificação
+            </th>
+            <th>
+                Equipe
+            </th>
+            <th>
+                Quantidade de Pontos
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        @foreach (var item in Model)
+        {
+            if (!parTimePontos.ContainsKey(item.IdEquipeNavigation.NomeEquipe))
+            {
+            parTimePontos.Add(item.IdEquipeNavigation.NomeEquipe, item.QuantidadePontos);
+
+            }
+            else
+            {
+                parTimePontos[item.IdEquipeNavigation.NomeEquipe] += item.QuantidadePontos;
+            }
+        }
+
+        @foreach (var tuple in parTimePontos.OrderByDescending(key => key.Value))
+        {
+            <tr>
+                <td>
+                    @contador
+                </td>
+                <td>
+                    @tuple.Key
+                </td>
+                <td>
+                    @tuple.Value
+                </td>
+            </tr>
+            contador++;
+        }
+
+    </tbody>
+</table>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Campeonato.Models.TipoTorneio>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="d-flex justify-content-center flex-column mb-5">
+    <h2 class="text-center mb-3">Tipos de Torneio</h2>
+    <hr />
+    <a class="btn btn-light mx-auto" asp-action="Create">Adicionar</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeTipo)
+            </td>
+            <td>
+                <a class="btn btn-primary py-1 me-2" asp-action="Edit" asp-route-id="@item.IdTipoTorneio">Editar</a> 
+                    <a class="btn btn-primary py-1 me-2" asp-action="Details" asp-route-id="@item.IdTipoTorneio">Detalhes</a>
+                    <a class="btn btn-primary py-1 me-2" asp-action="Delete" asp-route-id="@item.IdTipoTorneio">Excluir</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

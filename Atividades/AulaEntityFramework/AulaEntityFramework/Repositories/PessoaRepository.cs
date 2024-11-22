@@ -13,11 +13,7 @@ namespace AulaEntityFramework.Repositories
 			_dbContext = context;
 		}
 
-<<<<<<< HEAD:Atividades/AulaEntityFramework/Repositories/PessoaRepository.cs
         public Pessoa Delete(long id)
-=======
-        public Pessoa Delete(int id)
->>>>>>> a9e9ec756179dc5b418b71dfcaebac1e2897abaf:Atividades/AulaEntityFramework/AulaEntityFramework/Repositories/PessoaRepository.cs
         {
 			var pessoa = Get(id);
 			
@@ -30,11 +26,7 @@ namespace AulaEntityFramework.Repositories
 			return pessoa;
         }
 
-<<<<<<< HEAD:Atividades/AulaEntityFramework/Repositories/PessoaRepository.cs
         public Pessoa? Get(long id)
-=======
-        public Pessoa? Get(int id)
->>>>>>> a9e9ec756179dc5b418b71dfcaebac1e2897abaf:Atividades/AulaEntityFramework/AulaEntityFramework/Repositories/PessoaRepository.cs
 		{
 			var pessoa = _dbContext
 					.Pessoas
